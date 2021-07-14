@@ -48,10 +48,10 @@ function checkAllColors(field, color){
 */
 function create2DimensionField(array, size){
   const result = [];
-  let row = 0;
-  while (row < size) {
-    result[row] = array.slice(row, row + size);
-    row++;
+  let offset = 0;
+  for(let row = 0; row < size; row++){
+    result[row] = array.slice(offset, offset + size);
+    offset += size;
   }
 
   return result;
@@ -69,15 +69,15 @@ class Game {
       throw new Error('Only square fields are supported');
     }
     this.size = size;
+    this.rowLastIndex = size - 1;
     this.field = create2DimensionField(array, size);  
-
   }
 
   _setUpRules(){
     this.leftTopCornerColor = this.field[0][0];
-    this.rightTopCornerColor = this.field[0][this.size];
-    this.leftBottomCornerColor = this.field[this.size - 1][0];
-    this.rightBottomCornerColor = this.field[this.size - 1][this.size];
+    this.rightTopCornerColor = this.field[0][this.rowLastIndex];
+    this.leftBottomCornerColor = this.field[this.rowLastIndex][0];
+    this.rightBottomCornerColor = this.field[this.rowLastIndex][this.rowLastIndex];
   }
 
   isCompleted(){
@@ -87,12 +87,14 @@ class Game {
     const leftBottomBlock = getSquare(this.field, {y: halfSize, x: 0, size: halfSize});
     const rightBottomBlock = getSquare(this.field, {y: halfSize, x: halfSize, size: halfSize});
 
-    return [
+    const results = [
       checkAllColors(leftTopBlock, this.leftTopCornerColor),
-      checkAllColors(rightTopBlock, this.leftTopCornerColor),
-      checkAllColors(leftBottomBlock,this.leftTopCornerColor),
-      checkAllColors(rightBottomBlock, this.leftTopCornerColor)
-    ].every(result => result === true);
+      checkAllColors(rightTopBlock, this.rightTopCornerColor),
+      checkAllColors(leftBottomBlock,this.leftBottomCornerColor),
+      checkAllColors(rightBottomBlock, this.rightBottomCornerColor)
+    ];
+
+    return results.every(result => result === true);
   }
 
   rotate({x, y}, direction){
