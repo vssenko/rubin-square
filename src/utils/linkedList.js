@@ -9,20 +9,22 @@ class LinkedListItem {
 }
 
 class LinkedList {
-  first;
+  constructor(){
+    this.first = null;
+  }
 
   push(item){
-    const newItem = new LinkedListItem(item)
+    const newItem = new LinkedListItem(item);
   
     if (!this.first){
-      this.first = new LinkedListItem(item)
+      this.first = new LinkedListItem(item);
       return this.first;
     }
 
     const lastItem = this.last();
 
     lastItem.next = newItem;
-    newItem.prev = lastItem
+    newItem.prev = lastItem;
     return newItem;
   }
 
@@ -37,7 +39,7 @@ class LinkedList {
         last = i;
         return stopIterate;
       }
-    })
+    });
 
     return last;
   }
@@ -52,12 +54,12 @@ class LinkedList {
       return null;
     }
 
-    const {prev: prevToFound, next: nextToFound} = foundItem
+    const {prev: prevToFound, next: nextToFound} = foundItem;
     if (prevToFound){
-      prevToFound.next = nextToFound
+      prevToFound.next = nextToFound;
     }
     if (nextToFound){
-      nextToFound.prev = prevToFound
+      nextToFound.prev = prevToFound;
     }
     if (this.first === foundItem){
       this.first = nextToFound;
@@ -77,7 +79,7 @@ class LinkedList {
         foundItem = i;
         return stopIterate;
       }
-    })
+    });
 
     return foundItem;
   }
@@ -85,7 +87,7 @@ class LinkedList {
   toArray(){
     const result = [];
 
-    this.iterate((i) => result.push(i.item))
+    this.iterate((i) => result.push(i.item));
   
     return result;
   }
@@ -108,6 +110,6 @@ class LinkedList {
 
 LinkedList.operations = {
   stopIterate
-}
+};
 
-module.exports = LinkedList
+module.exports = LinkedList;
