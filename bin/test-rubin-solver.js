@@ -9,6 +9,12 @@ const array = [
   colors.green, colors.green, colors.yellow, colors.yellow
 ];
 
+console.log(array);
+
 const game = new Game(array);
 
-solver.solveGame(game);
+console.log('here');
+
+console.log(game.field);
+
+console.log(Game.getSquare(game.field, {x:0, y:0, size: 2}));

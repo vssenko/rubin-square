@@ -14,6 +14,29 @@ const directions = {
   counterclockwise: 'counterclockwise'
 };
 
+function getSquare(field, {x,y, size}){
+  const result = [];
+
+  for(let row = y; row < (y + size); row++){
+    result.push(field[row].slice(x, x + size));
+  }
+
+  return result;
+}
+
+function checkAllColors(field, color){
+  let result = true;
+  field.forEach(row => {
+    row.forEach(item => {
+      if (item !== color){
+        result = false;
+      }
+    });
+  });
+
+  return result;
+}
+
 
 /*
 / This method create a field (array of arrays) in a representation like:
@@ -26,8 +49,9 @@ const directions = {
 function create2DimensionField(array, size){
   const result = [];
   let row = 0;
-  while (row < array.length / size) {
-    result[row] = array.slice(0, size);
+  while (row < size) {
+    result[row] = array.slice(row, row + size);
+    row++;
   }
 
   return result;
@@ -35,19 +59,40 @@ function create2DimensionField(array, size){
 
 class Game {
   constructor(array) {
-    if (array[0][0]){
-      const field = array;
-      this.size = field[0].length;
-      this.field = field;
-      return;
-    }
+    this._setUpField(array);
+    this._setUpRules();
+  }
 
+  _setUpField(array){
     const size = Math.sqrt(array.length);
     if (size.toString().includes('.')){
       throw new Error('Only square fields are supported');
     }
     this.size = size;
-    this.field = create2DimensionField(array, size);
+    this.field = create2DimensionField(array, size);  
+
+  }
+
+  _setUpRules(){
+    this.leftTopCornerColor = this.field[0][0];
+    this.rightTopCornerColor = this.field[0][this.size];
+    this.leftBottomCornerColor = this.field[this.size - 1][0];
+    this.rightBottomCornerColor = this.field[this.size - 1][this.size];
+  }
+
+  isCompleted(){
+    const halfSize = this.size / 2;
+    const leftTopBlock = getSquare(this.field, {y: 0, x: 0, size: halfSize});
+    const rightTopBlock = getSquare(this.field, {y: 0, x: halfSize, size: halfSize});
+    const leftBottomBlock = getSquare(this.field, {y: halfSize, x: 0, size: halfSize});
+    const rightBottomBlock = getSquare(this.field, {y: halfSize, x: halfSize, size: halfSize});
+
+    return [
+      checkAllColors(leftTopBlock, this.leftTopCornerColor),
+      checkAllColors(rightTopBlock, this.leftTopCornerColor),
+      checkAllColors(leftBottomBlock,this.leftTopCornerColor),
+      checkAllColors(rightBottomBlock, this.leftTopCornerColor)
+    ].every(result => result === true);
   }
 
   rotate({x, y}, direction){
@@ -86,5 +131,6 @@ class Game {
 
 Game.colors = colors;
 Game.directions = directions;
+Game.getSquare = getSquare;
 
 module.exports = Game;
