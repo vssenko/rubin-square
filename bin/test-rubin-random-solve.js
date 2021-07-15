@@ -9,13 +9,6 @@ const array = [
   colors.green, colors.green, colors.yellow, colors.yellow
 ];
 
-// const array = [
-//   colors.purple, colors.purple, colors.orange, colors.orange,
-//   colors.purple, colors.purple, colors.orange, colors.orange,
-//   colors.green, colors.green, colors.yellow, colors.yellow,
-//   colors.green, colors.green, colors.yellow, colors.yellow
-// ];
-
 const game = new Game(array);
 
 console.log('field:');
@@ -32,4 +25,10 @@ rightBottom:${game.rightBottomCornerColor}
 console.log('isCompleted:');
 console.log(game.isCompleted());
 
-solver.solveGameRandomly(game);
+const moves = solver.solveGameRandomly(game, 5);
+
+console.log('final game state:');
+console.log(game.field);
+
+console.log('all moves:');
+console.log(moves);

@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const colors = {
   white: 'white',
   black: 'black',
@@ -50,7 +52,7 @@ function create2DimensionField(array, size){
   const result = [];
   let offset = 0;
   for(let row = 0; row < size; row++){
-    result[row] = array.slice(offset, offset + size);
+    result[row] = _.cloneDeep(array.slice(offset, offset + size));
     offset += size;
   }
 
@@ -97,7 +99,11 @@ class Game {
     return results.every(result => result === true);
   }
 
-  rotate({x, y}, direction){
+  setGameState(field){
+    this.field = _.cloneDeep(field);
+  }
+
+  rotate({x, y, direction}){
     if (direction === directions.clockwise){
       return this._rotateClockWise({x,y});
     }
@@ -107,27 +113,27 @@ class Game {
   }
 
   _rotateClockWise({x,y}){
-    const leftTop = this.field[y,x];
-    const rightTop = this.field[y, x + 1];
-    const leftBottom = this.field[y + 1, x];
-    const rightBottom = this.field[y + 1, x + 1];
+    const leftTop = this.field[y][x];
+    const rightTop = this.field[y][x + 1];
+    const leftBottom = this.field[y + 1][x];
+    const rightBottom = this.field[y + 1][x + 1];
 
-    this.field[y,x] = leftBottom;
-    this.field[y, x + 1] = leftTop;
-    this.field[y + 1, x] = rightBottom;
-    this.field[y + 1, x + 1] = rightTop;
+    this.field[y][x] = leftBottom;
+    this.field[y][x + 1] = leftTop;
+    this.field[y + 1][x] = rightBottom;
+    this.field[y + 1][x + 1] = rightTop;
   }
 
   _rotateCounterClockWise({x,y}){
-    const leftTop = this.field[y,x];
-    const rightTop = this.field[y, x + 1];
-    const leftBottom = this.field[y + 1, x];
-    const rightBottom = this.field[y + 1, x + 1];
+    const leftTop = this.field[y][x];
+    const rightTop = this.field[y][x + 1];
+    const leftBottom = this.field[y + 1][x];
+    const rightBottom = this.field[y + 1][x + 1];
 
-    this.field[y,x] = rightTop;
-    this.field[y, x + 1] = rightBottom;
-    this.field[y + 1, x] = leftTop;
-    this.field[y + 1, x + 1] =leftBottom;
+    this.field[y][x] = rightTop;
+    this.field[y][x + 1] = rightBottom;
+    this.field[y + 1][x] = leftTop;
+    this.field[y + 1][x + 1] =leftBottom;
   }
 }
 
