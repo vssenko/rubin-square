@@ -1,4 +1,5 @@
 const {Game, solver} = require('../src/rubinSquare');
+const gameUtils = require('../src/utils/game');
 
 const colors = Game.colors;
 
@@ -11,19 +12,8 @@ const array = [
 
 const game = new Game(array);
 
-console.log('field:');
-console.log(game.field);
+gameUtils.logGameState(game);
 
-console.log('game rules:');
-console.log(`
-leftTop:${game.leftTopCornerColor},
-rightTop:${game.rightTopCornerColor},
-leftBottom:${game.leftBottomCornerColor},
-rightBottom:${game.rightBottomCornerColor}
-`);
-
-console.log('isCompleted:');
-console.log(game.isCompleted());
 
 const moves = solver.solveGameRandomly(game, 5);
 

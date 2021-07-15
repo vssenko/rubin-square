@@ -24,7 +24,7 @@ function trySolveRandomly(game, maxMoves){
     return move;
   };
 
-  while(!game.isCompleted() && moves.length <= maxMoves){
+  while(!game.isCompleted() && moves.length < maxMoves){
     moves.push(makeRandomMove());
   }
 
@@ -36,8 +36,8 @@ function trySolveRandomly(game, maxMoves){
  * 
  * @param {Game} game 
  */
-function solveGameRandomly(game, {maxMoves, maxAttempts = 1000} = {}){
-  console.log('solver: start solving game randomly');
+function solveGameRandomly(game, {maxMoves, maxAttempts = 1000, silent = false} = {}){
+  !silent && console.log('solver: start solving game randomly');
 
   let attempt = 0;
 
@@ -47,7 +47,7 @@ function solveGameRandomly(game, {maxMoves, maxAttempts = 1000} = {}){
   let isSolved = false;
   while(!isSolved && attempt < maxAttempts){
     if (attempt % 100 === 0){
-      console.log(`solver: solving game, attempt ${attempt}`);
+      !silent && console.log(`solver: solving game, attempt ${attempt}`);
     }
     game.setGameState(initialField);
     moves = trySolveRandomly(game, maxMoves);
@@ -58,15 +58,15 @@ function solveGameRandomly(game, {maxMoves, maxAttempts = 1000} = {}){
   }
 
   if (game.isCompleted()){
-    console.log(`solver: game is solved randomly on attempt ${attempt} in ${moves.length} moves`);
+    !silent && console.log(`solver: game is solved randomly on attempt ${attempt} in ${moves.length} moves`);
     return moves;
   }
 
   return null;
 }
 
-function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAttemptsPerSolve = 1000 } = {}){
-  console.log('solver: start solving game with max moves progression:');
+function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAttemptsPerSolve = 1000, silent = false } = {}){
+  !silent && console.log('solver: start solving game with max moves progression:');
 
   const initialState = _.cloneDeep(game.field);
 
@@ -75,19 +75,18 @@ function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAt
   let result;
   while(maxMoves <= maxPossibleMoves){
     game.setGameState(initialState);
-    result = solveGameRandomly(game, {maxMoves, maxAttempts: maxAttemptsPerSolve});
+    result = solveGameRandomly(game, {maxMoves, maxAttempts: maxAttemptsPerSolve, silent});
     if (game.isCompleted()){
-      console.log('here!');
       break;
     }
     maxMoves++;
   }
 
   if (game.isCompleted()){
-    console.log(`solver: game is solved with progression on ${maxMoves}`);
+    !silent && console.log(`solver: game is solved with progression on ${maxMoves}`);
     return result; 
   } else {
-    console.log('solver: game is not solvedwith progression');
+    !silent && console.log('solver: game is not solvedwith progression');
     return null;
   }
 

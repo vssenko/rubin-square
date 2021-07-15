@@ -62,9 +62,9 @@ function create2DimensionField(array, size){
 }
 
 class Game {
-  constructor(array) {
+  constructor(array, rules) {
     this._setUpField(array);
-    this._setUpRules();
+    this._setUpRules(rules);
   }
 
   _setUpField(array){
@@ -77,11 +77,11 @@ class Game {
     this.field = create2DimensionField(array, size);  
   }
 
-  _setUpRules(){
-    this.leftTopCornerColor = this.field[0][0];
-    this.rightTopCornerColor = this.field[0][this.rowLastIndex];
-    this.leftBottomCornerColor = this.field[this.rowLastIndex][0];
-    this.rightBottomCornerColor = this.field[this.rowLastIndex][this.rowLastIndex];
+  _setUpRules(rules = {}){
+    this.leftTopCornerColor = rules.leftTopCornerColor || this.field[0][0];
+    this.rightTopCornerColor = rules.rightTopCornerColor || this.field[0][this.rowLastIndex];
+    this.leftBottomCornerColor = rules.leftBottomCornerColor || this.field[this.rowLastIndex][0];
+    this.rightBottomCornerColor = rules.rightBottomCornerColor|| this.field[this.rowLastIndex][this.rowLastIndex];
   }
 
   isCompleted(){
