@@ -6,7 +6,8 @@
   "scripts": {
     "test:rubin:random": "node ./bin/test-rubin-random-solve",
     "test:rubin:randomProgression": "node ./bin/test-rubin-random-progression-solve",
-    "test": "mocha --config ./tests/test.config.js"
+    "test": "mocha --config ./tests/test.config.js",
+    "test:unstable": "mocha --config ./tests/unstable.config.js"
   },
   "keywords": [],
   "author": "",
