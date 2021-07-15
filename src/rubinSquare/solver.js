@@ -76,6 +76,8 @@ function solveGameRandomlyWithProgression(game, { startingMoves = 0, maxPossible
 
   let result;
   while(maxMoves <= maxPossibleMoves){
+    console.log(`solver: try solve game randomly with ${maxMoves} max moves and ${maxAttemptsPerSolve} attempts`);
+
     game.setGameState(initialState);
     result = solveGameRandomly(game, {maxMoves, maxAttempts: maxAttemptsPerSolve, silent});
     if (game.isCompleted()){
