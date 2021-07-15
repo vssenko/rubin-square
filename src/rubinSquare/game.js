@@ -17,16 +17,6 @@ const directions = {
   counterclockwise: 'counterclockwise'
 };
 
-function getSquare(field, {x,y, size}){
-  const result = [];
-
-  for(let row = y; row < (y + size); row++){
-    result.push(field[row].slice(x, x + size));
-  }
-
-  return result;
-}
-
 function checkAllColors(field, color){
   let result = true;
   field.forEach(row => {
@@ -66,10 +56,10 @@ class Game {
 
   isCompleted(){
     const halfSize = this.size / 2;
-    const leftTopBlock = getSquare(this.field, {y: 0, x: 0, size: halfSize});
-    const rightTopBlock = getSquare(this.field, {y: 0, x: halfSize, size: halfSize});
-    const leftBottomBlock = getSquare(this.field, {y: halfSize, x: 0, size: halfSize});
-    const rightBottomBlock = getSquare(this.field, {y: halfSize, x: halfSize, size: halfSize});
+    const leftTopBlock = arrayUtils.getSquare(this.field, {y: 0, x: 0, size: halfSize});
+    const rightTopBlock = arrayUtils.getSquare(this.field, {y: 0, x: halfSize, size: halfSize});
+    const leftBottomBlock = arrayUtils.getSquare(this.field, {y: halfSize, x: 0, size: halfSize});
+    const rightBottomBlock = arrayUtils.getSquare(this.field, {y: halfSize, x: halfSize, size: halfSize});
 
     const results = [
       checkAllColors(leftTopBlock, this.leftTopCornerColor),
@@ -86,41 +76,20 @@ class Game {
   }
 
   rotate({x, y, direction}){
-    if (direction === directions.clockwise){
-      return this._rotateClockWise({x,y});
-    }
-    if (direction === directions.counterclockwise){
-      return this._rotateCounterClockWise({x,y});
-    }
-  }
+    const rotate = direction === directions.clockwise
+      ? arrayUtils.getRotatedClockWise
+      : arrayUtils.getRotatedCounterClockWise;
 
-  _rotateClockWise({x,y}){
-    const leftTop = this.field[y][x];
-    const rightTop = this.field[y][x + 1];
-    const leftBottom = this.field[y + 1][x];
-    const rightBottom = this.field[y + 1][x + 1];
+    const square = arrayUtils.getSquare(this.field, {x, y, size: this.rotateSize });
 
-    this.field[y][x] = leftBottom;
-    this.field[y][x + 1] = leftTop;
-    this.field[y + 1][x] = rightBottom;
-    this.field[y + 1][x + 1] = rightTop;
-  }
 
-  _rotateCounterClockWise({x,y}){
-    const leftTop = this.field[y][x];
-    const rightTop = this.field[y][x + 1];
-    const leftBottom = this.field[y + 1][x];
-    const rightBottom = this.field[y + 1][x + 1];
+    const rotated = rotate(square);
 
-    this.field[y][x] = rightTop;
-    this.field[y][x + 1] = rightBottom;
-    this.field[y + 1][x] = leftTop;
-    this.field[y + 1][x + 1] =leftBottom;
+    arrayUtils.mergeSubArray(this.field, rotated, {x,y});
   }
 }
 
 Game.colors = colors;
 Game.directions = directions;
-Game.getSquare = getSquare;
 
 module.exports = Game;

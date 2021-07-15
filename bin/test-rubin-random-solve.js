@@ -15,7 +15,7 @@ const game = new Game(array);
 gameUtils.logGameState(game);
 
 
-const moves = solver.solveGameRandomly(game, {maxMoves: 5});
+const moves = solver.solveGameRandomly(game, {maxMoves: 2});
 
 console.log('final game state:');
 console.log(game.field);
