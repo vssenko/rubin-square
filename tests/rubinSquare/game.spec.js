@@ -5,7 +5,7 @@ const colors = Game.colors;
 describe('Game', () => {
   describe('initial state', () => {
     let game;
-    before(() => {
+    beforeEach(() => {
       game = new Game([
         colors.purple, colors.purple, colors.orange, colors.orange,
         colors.green, colors.orange, colors.yellow, colors.orange,
@@ -28,6 +28,17 @@ describe('Game', () => {
       assert.deepStrictEqual(game.rightTopCornerColor, colors.orange);
       assert.deepStrictEqual(game.leftBottomCornerColor, colors.green);
       assert.deepStrictEqual(game.rightBottomCornerColor, colors.yellow);
+    });
+
+    it('should determine completed state correctly', () => {
+      assert.deepStrictEqual(game.isCompleted(), false);
+      game.setGameState([
+        [ colors.purple, colors.purple, colors.orange, colors.orange ],
+        [ colors.purple, colors.purple, colors.orange, colors.orange ],
+        [ colors.green, colors.green, colors.yellow, colors.yellow ],
+        [ colors.green, colors.green, colors.yellow, colors.yellow ]
+      ]);
+      assert.deepStrictEqual(game.isCompleted(), true);
     });
   });
 });
