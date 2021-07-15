@@ -36,7 +36,7 @@ function trySolveRandomly(game, maxMoves){
  * 
  * @param {Game} game 
  */
-function solveGameRandomly(game, maxMoves){
+function solveGameRandomly(game, maxMoves, maxAttempts = Number.MAX_VALUE){
   console.log('solver: start solving game');
 
   let attempt = 0;
@@ -45,7 +45,7 @@ function solveGameRandomly(game, maxMoves){
 
   let moves;
   let isSolved = false;
-  while(!isSolved){
+  while(!isSolved && attempt < maxAttempts){
     if (attempt % 100 === 0){
       console.log(`solver: solving game, attempt ${attempt}`);
     }
@@ -61,6 +61,32 @@ function solveGameRandomly(game, maxMoves){
   return moves;
 }
 
+function solveGameRandomlyWithProgression(game){
+  console.log('solver: start solving game with max moves progression:');
+  const maxPossibleMoves = 1000;
+
+  let maxMoves = 0;
+
+  let result;
+  while(maxMoves <= maxPossibleMoves){
+    result = solveGameRandomly(game, maxMoves, 1000);
+    if (game.isCompleted()){
+      break;
+    }
+    maxMoves++;
+  }
+
+  if (game.isCompleted()){
+    console.log(`solver: game is solved with progression on ${maxMoves}`);
+    return result; 
+  } else {
+    console.log('solver: game is not solvedwith progression');
+    return null;
+  }
+
+}
+
 module.exports = {
-  solveGameRandomly
+  solveGameRandomly,
+  solveGameRandomlyWithProgression
 };
