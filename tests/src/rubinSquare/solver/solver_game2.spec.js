@@ -1,9 +1,9 @@
 const assert = require('assert');
-const Game = require('../../../src/rubinSquare/game');
+const Game = require('../../../../src/rubinSquare/game');
 const colors = Game.colors;
-const gameUtils = require('../../../src/utils/game');
+const gameUtils = require('../../../../src/utils/game');
 
-const solver = require('../../../src/rubinSquare/solver');
+const solver = require('../../../../src/rubinSquare/solver');
 
 describe('solver', () => {
   describe('game2', () => {

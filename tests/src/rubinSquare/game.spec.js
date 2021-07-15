@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Game = require('../../src/rubinSquare/game');
+const Game = require('../../../src/rubinSquare/game');
 const colors = Game.colors;
 
 describe('Game', () => {

@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const LinkedList = require('../../src/utils/linkedList');
+const LinkedList = require('../../../src/utils/linkedList');
 
 describe('Linked list', () => {
   it('should work', () => {
