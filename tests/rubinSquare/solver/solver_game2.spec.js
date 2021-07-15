@@ -6,7 +6,7 @@ const gameUtils = require('../../../src/utils/game');
 const solver = require('../../../src/rubinSquare/solver');
 
 describe('solver', () => {
-  describe.only('game2', () => {
+  describe('game2', () => {
     let game;
   
     beforeEach(() => {
@@ -39,7 +39,7 @@ describe('solver', () => {
       assert.deepStrictEqual(moves.length, 6);
     });
   
-    it.only('should solve game2 with progression algorythm', () => {
+    it('should solve game2 with progression algorythm', () => {
       gameUtils.logGameState(game);
       const moves = solver.solveGameRandomlyWithProgression(game, {silent: true, maxAttemptsPerSolve: 100000, maxPossibleMoves: 10});
       
