@@ -36,7 +36,7 @@ function trySolveRandomly(game, maxMoves){
  * 
  * @param {Game} game 
  */
-function solveGameRandomly(game, {maxMoves, maxAttempts = 1000, silent = false} = {}){
+function solveGameRandomly(game, {maxMoves, maxAttempts = 100000, silent = false} = {}){
   !silent && console.log('solver: start solving game randomly');
 
   let attempt = 0;
@@ -65,7 +65,7 @@ function solveGameRandomly(game, {maxMoves, maxAttempts = 1000, silent = false} 
   return null;
 }
 
-function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAttemptsPerSolve = 1000, silent = false } = {}){
+function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAttemptsPerSolve = 100000, silent = false } = {}){
   !silent && console.log('solver: start solving game with max moves progression:');
 
   const initialState = _.cloneDeep(game.field);
