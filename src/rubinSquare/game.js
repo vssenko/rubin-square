@@ -40,14 +40,16 @@ function checkAllColors(field, color){
 }
 
 
-/*
-/ This method create a field (array of arrays) in a representation like:
-/                       [[1,2,3]
-/ [1,2,3,4,5,6,7,8,9] => [4.5.6]
-/                        [7,8,9]]
-/
-/
-*/
+
+/**
+ * This method create a field (array of arrays) in a representation like:
+ *                       [[1,2,3]
+ * [1,2,3,4,5,6,7,8,9] => [4.5.6]
+ *                        [7,8,9]]
+ * @param {string[]} array 
+ * @param {number} size 
+ * @returns {Array.<string[]>}
+ */
 function create2DimensionField(array, size){
   const result = [];
   let offset = 0;
