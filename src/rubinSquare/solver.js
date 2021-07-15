@@ -10,7 +10,7 @@ function getRandomDirection(){
 }
 
 function trySolveRandomly(game, maxMoves){
-  const maxFieldIndex = game.size - 2;
+  const maxFieldIndex = game.size - game.rotateSize;
 
   const moves = [];
 
@@ -65,12 +65,14 @@ function solveGameRandomly(game, {maxMoves, maxAttempts = 100000, silent = false
   return null;
 }
 
-function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAttemptsPerSolve = 100000, silent = false } = {}){
-  !silent && console.log('solver: start solving game with max moves progression:');
+function solveGameRandomlyWithProgression(game, { startingMoves = 0, maxPossibleMoves = 1000, maxAttemptsPerSolve = 100000, silent = false } = {}){
+  console.log('solver: start solving game with max moves progression:');
+  console.log(`solver: startingMoves: ${startingMoves}, maxPossibleMoves: ${maxPossibleMoves}, maxAttemptsPerSolve: ${maxAttemptsPerSolve}, silent: ${silent}`);
+
 
   const initialState = _.cloneDeep(game.field);
 
-  let maxMoves = 0;
+  let maxMoves = startingMoves;
 
   let result;
   while(maxMoves <= maxPossibleMoves){
@@ -83,10 +85,10 @@ function solveGameRandomlyWithProgression(game, { maxPossibleMoves = 1000, maxAt
   }
 
   if (game.isCompleted()){
-    !silent && console.log(`solver: game is solved with progression on ${maxMoves}`);
+    console.log(`solver: game is solved with progression on ${maxMoves}`);
     return result; 
   } else {
-    !silent && console.log('solver: game is not solvedwith progression');
+    console.log('solver: game is not solvedwith progression');
     return null;
   }
 

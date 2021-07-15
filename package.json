@@ -7,7 +7,8 @@
     "test:rubin:random": "node ./bin/test-rubin-random-solve",
     "test:rubin:randomProgression": "node ./bin/test-rubin-random-progression-solve",
     "test": "mocha --config ./tests/test.config.js",
-    "test:unstable": "mocha --config ./tests/unstable.config.js"
+    "test:unstable": "mocha --config ./tests/unstable.config.js",
+    "rubin:level53": "node ./bin/rubin-solve-level-53"
   },
   "keywords": [],
   "author": "",

@@ -3,12 +3,11 @@ function logGameState(game){
   console.log(game.field);
   
   console.log('game rules:');
-  console.log(`
-    leftTop:${game.leftTopCornerColor},
-    rightTop:${game.rightTopCornerColor},
-    leftBottom:${game.leftBottomCornerColor},
-    rightBottom:${game.rightBottomCornerColor}
-  `);
+  console.log(`leftTop:${game.leftTopCornerColor}, ` +
+    `rightTop:${game.rightTopCornerColor}, `+
+    `leftBottom:${game.leftBottomCornerColor}, `+
+    `rightBottom:${game.rightBottomCornerColor}, `+
+    `rotateSize: ${game.rotateSize}`);
   
   console.log('isCompleted:');
   console.log(game.isCompleted());
