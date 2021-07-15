@@ -6,13 +6,14 @@
   "scripts": {
     "test:rubin:random": "node ./bin/test-rubin-random-solve",
     "test:rubin:randomProgression": "node ./bin/test-rubin-random-solve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --config ./tests/test.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.30.0"
+    "eslint": "^7.30.0",
+    "mocha": "^9.0.2"
   },
   "dependencies": {
     "lodash": "^4.17.21"
