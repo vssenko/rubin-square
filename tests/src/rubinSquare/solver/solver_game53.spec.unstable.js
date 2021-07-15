@@ -14,8 +14,8 @@ describe('solver', () => {
     beforeEach(() => {
       game = new Game(level53.array, level53.rules);
     });
-  
-    it.only('should solve this crazy shit', () => {
+
+    it('should solve this crazy shit', () => {
       gameUtils.logGameState(game);    
       const moves = solver.solveGameRandomly(game, {maxMoves:50, maxAttempts: 100000000, silent: true});
       
