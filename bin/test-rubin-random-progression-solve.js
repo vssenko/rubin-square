@@ -1,5 +1,6 @@
 const {Game, solver} = require('../src/rubinSquare');
 const gameUtils = require('../src/utils/game');
+const jsonfile = require('jsonfile');
 
 const colors = Game.colors;
 
@@ -21,3 +22,5 @@ console.log(game.field);
 
 console.log('all moves:');
 console.log(moves);
+
+jsonfile.writeFileSync('./rubin-level1.result.json', moves);

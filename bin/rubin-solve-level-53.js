@@ -1,5 +1,6 @@
 const {Game, solver} = require('../src/rubinSquare');
 const gameUtils = require('../src/utils/game');
+const jsonfile = require('jsonfile');
 
 const level53 = require('../tests/src/rubinSquare/solver/data/level53');
 
@@ -23,3 +24,5 @@ console.log(game.field);
 
 console.log('all moves:');
 console.log(moves);
+
+jsonfile.writeFileSync('./rubin-level53.result.json', moves);
