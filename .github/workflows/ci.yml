@@ -1,25 +1,31 @@
-name: Continuous Integration
+name: Deploy
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  merge_pull_request:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build --if-present
+    - Name: Run tests
+      run: npm test
 
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      - name: Install dependencies
-        run: npm i
-
-      - name: Test application
-        run: npm test
-
+    - name: Copy file via scp
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "${{ secrets.TARGET_DIR }}"
